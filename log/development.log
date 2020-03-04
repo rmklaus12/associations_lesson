@@ -1,0 +1,149 @@
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_try_advisory_lock(7654905522788743065)[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateAddresses (20200303075405)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (57.6ms)[0m  [1m[35mCREATE TABLE "addresses" ("id" bigserial primary key, "street" character varying, "city" character varying, "state" character varying, "postcode" character varying, "author_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_d73c6f0464"
+FOREIGN KEY ("author_id")
+  REFERENCES "authors" ("id")
+)[0m
+  [1m[35m (2.6ms)[0m  [1m[35mCREATE  INDEX  "index_addresses_on_author_id" ON "addresses"  ("author_id")[0m
+  [1m[36mprimary::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200303075405"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (25.0ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(7654905522788743065)[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mAuthor Load (43.3ms)[0m  [1m[34mSELECT "authors".* FROM "authors" WHERE "authors"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAddress Load (56.8ms)[0m  [1m[34mSELECT "addresses".* FROM "addresses" WHERE "addresses"."author_id" = $1 LIMIT $2[0m  [["author_id", 1], ["LIMIT", 1]]
+  [1m[36mAddress Destroy (26.5ms)[0m  [1m[31mDELETE FROM "addresses" WHERE "addresses"."id" = $1[0m  [["id", 1]]
+  [1m[36mAuthor Destroy (3.5ms)[0m  [1m[31mDELETE FROM "authors" WHERE "authors"."id" = $1[0m  [["id", 1]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAuthor Create (46.1ms)[0m  [1m[32mINSERT INTO "authors" ("name", "date_of_birth", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "JR Tolkien"], ["date_of_birth", "1950-01-01"], ["created_at", "2020-03-03 22:24:45.088961"], ["updated_at", "2020-03-03 22:24:45.088961"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAddress Create (41.6ms)[0m  [1m[32mINSERT INTO "addresses" ("street", "city", "state", "postcode", "author_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["street", "123 Fake Street"], ["city", "New York City"], ["state", "New York"], ["postcode", "1111"], ["author_id", 2], ["created_at", "2020-03-03 22:24:45.802525"], ["updated_at", "2020-03-03 22:24:45.802525"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mAddress Load (0.4ms)[0m  [1m[34mSELECT "addresses".* FROM "addresses" WHERE "addresses"."author_id" = $1 LIMIT $2[0m  [["author_id", 2], ["LIMIT", 1]]
+  [1m[36mAuthor Load (0.4ms)[0m  [1m[34mSELECT "authors".* FROM "authors" ORDER BY "authors"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mAddress Load (0.4ms)[0m  [1m[34mSELECT "addresses".* FROM "addresses" WHERE "addresses"."author_id" = $1 LIMIT $2[0m  [["author_id", 2], ["LIMIT", 1]]
+  [1m[36mAddress Load (0.4ms)[0m  [1m[34mSELECT "addresses".* FROM "addresses" ORDER BY "addresses"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mAuthor Load (0.3ms)[0m  [1m[34mSELECT "authors".* FROM "authors" WHERE "authors"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAuthor Update (5.8ms)[0m  [1m[33mUPDATE "authors" SET "name" = $1, "updated_at" = $2 WHERE "authors"."id" = $3[0m  [["name", "J.R. Tolkien"], ["updated_at", "2020-03-03 22:26:10.571103"], ["id", 2]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(7654905522788743065)[0m
+  [1m[35m (24.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateBooks (20200303224336)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (67.5ms)[0m  [1m[35mCREATE TABLE "books" ("id" bigserial primary key, "title" character varying, "genre" character varying, "author_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_53d51ce16a"
+FOREIGN KEY ("author_id")
+  REFERENCES "authors" ("id")
+)[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE  INDEX  "index_books_on_author_id" ON "books"  ("author_id")[0m
+  [1m[36mprimary::SchemaMigration Create (0.9ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200303224336"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (2.5ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(7654905522788743065)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mAuthor Load (0.4ms)[0m  [1m[34mSELECT "authors".* FROM "authors" ORDER BY "authors"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mBook Create (85.9ms)[0m  [1m[32mINSERT INTO "books" ("title", "genre", "author_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "Lord of the Rings"], ["genre", "fantasy"], ["author_id", 2], ["created_at", "2020-03-03 22:46:01.175998"], ["updated_at", "2020-03-03 22:46:01.175998"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mAuthor Load (0.4ms)[0m  [1m[34mSELECT "authors".* FROM "authors" ORDER BY "authors"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mBook Create (0.5ms)[0m  [1m[32mINSERT INTO "books" ("title", "genre", "author_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "The Hobbit"], ["genre", "fantasy"], ["author_id", 2], ["created_at", "2020-03-03 22:48:05.900105"], ["updated_at", "2020-03-03 22:48:05.900105"]]
+  [1m[35m (39.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mBook Load (0.4ms)[0m  [1m[34mSELECT "books".* FROM "books" WHERE "books"."author_id" = $1 LIMIT $2[0m  [["author_id", 2], ["LIMIT", 11]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(7654905522788743065)[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateGenres (20200303230036)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (34.6ms)[0m  [1m[35mCREATE TABLE "genres" ("id" bigserial primary key, "name" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mprimary::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200303230036"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateBooksGenres (20200303230103)
+  [1m[35m (39.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (8.6ms)[0m  [1m[35mCREATE TABLE "books_genres" ("id" bigserial primary key, "book_id" bigint NOT NULL, "genre_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_4bec785c35"
+FOREIGN KEY ("book_id")
+  REFERENCES "books" ("id")
+, CONSTRAINT "fk_rails_888159e47e"
+FOREIGN KEY ("genre_id")
+  REFERENCES "genres" ("id")
+)[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE  INDEX  "index_books_genres_on_book_id" ON "books_genres"  ("book_id")[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX  "index_books_genres_on_genre_id" ON "books_genres"  ("genre_id")[0m
+  [1m[36mprimary::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200303230103"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to RemoveGenreFromBooks (20200303230125)
+  [1m[35m (39.8ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (7.2ms)[0m  [1m[35mALTER TABLE "books" DROP COLUMN "genre"[0m
+  [1m[36mprimary::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200303230125"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.8ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_advisory_unlock(7654905522788743065)[0m
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAuthor Create (0.9ms)[0m  [1m[32mINSERT INTO "authors" ("name", "date_of_birth", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Brandon Sanderson"], ["date_of_birth", "1975-12-19"], ["created_at", "2020-03-03 23:12:18.431332"], ["updated_at", "2020-03-03 23:12:18.431332"]]
+  [1m[35m (81.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAuthor Create (0.6ms)[0m  [1m[32mINSERT INTO "authors" ("name", "date_of_birth", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Jasper Fforde"], ["date_of_birth", "1961-01-11"], ["created_at", "2020-03-03 23:13:36.877231"], ["updated_at", "2020-03-03 23:13:36.877231"]]
+  [1m[35m (40.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAuthor Create (0.9ms)[0m  [1m[32mINSERT INTO "authors" ("name", "date_of_birth", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Jasper Fforde"], ["date_of_birth", "1961-01-11"], ["created_at", "2020-03-03 23:17:17.354916"], ["updated_at", "2020-03-03 23:17:17.354916"]]
+  [1m[35m (81.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAuthor Load (0.5ms)[0m  [1m[34mSELECT "authors".* FROM "authors" WHERE "authors"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mBook Create (1.4ms)[0m  [1m[32mINSERT INTO "books" ("title", "author_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "The Eyre Affair"], ["author_id", 5], ["created_at", "2020-03-03 23:17:58.154195"], ["updated_at", "2020-03-03 23:17:58.154195"]]
+  [1m[35m (40.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mBook Load (0.4ms)[0m  [1m[34mSELECT "books".* FROM "books" ORDER BY "books"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(7654905522788743065)[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT pg_advisory_unlock(7654905522788743065)[0m
+  [1m[35m (1.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAuthor Create (0.6ms)[0m  [1m[32mINSERT INTO "authors" ("name", "date_of_birth", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Brandon Sanderson"], ["date_of_birth", "1975-12-19"], ["created_at", "2020-03-03 23:21:56.452701"], ["updated_at", "2020-03-03 23:21:56.452701"]]
+  [1m[35m (40.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAuthor Load (0.5ms)[0m  [1m[34mSELECT "authors".* FROM "authors" WHERE "authors"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mBook Create (0.9ms)[0m  [1m[32mINSERT INTO "books" ("title", "author_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "The Way Of Kings"], ["author_id", 6], ["created_at", "2020-03-03 23:21:56.540600"], ["updated_at", "2020-03-03 23:21:56.540600"]]
+  [1m[35m (40.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mBook Load (0.4ms)[0m  [1m[34mSELECT "books".* FROM "books" ORDER BY "books"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mGenre Load (2.1ms)[0m  [1m[34mSELECT "genres".* FROM "genres" ORDER BY "genres"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAuthor Create (1.1ms)[0m  [1m[32mINSERT INTO "authors" ("name", "date_of_birth", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Brandon Sanderson"], ["date_of_birth", "1975-12-19"], ["created_at", "2020-03-03 23:24:35.043031"], ["updated_at", "2020-03-03 23:24:35.043031"]]
+  [1m[35m (40.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mBook Create (0.8ms)[0m  [1m[32mINSERT INTO "books" ("title", "author_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "The Way Of Kings"], ["author_id", 7], ["created_at", "2020-03-03 23:24:35.128166"], ["updated_at", "2020-03-03 23:24:35.128166"]]
+  [1m[35m (40.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mBook Load (0.3ms)[0m  [1m[34mSELECT "books".* FROM "books" ORDER BY "books"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mGenre Create (1.3ms)[0m  [1m[32mINSERT INTO "genres" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "fantasy"], ["created_at", "2020-03-03 23:24:35.202954"], ["updated_at", "2020-03-03 23:24:35.202954"]]
+  [1m[36mBooksGenre Create (2.8ms)[0m  [1m[32mINSERT INTO "books_genres" ("book_id", "genre_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["book_id", 1], ["genre_id", 1], ["created_at", "2020-03-03 23:24:35.214667"], ["updated_at", "2020-03-03 23:24:35.214667"]]
+  [1m[35m (26.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mGenre Load (0.8ms)[0m  [1m[34mSELECT "genres".* FROM "genres" INNER JOIN "books_genres" ON "genres"."id" = "books_genres"."genre_id" WHERE "books_genres"."book_id" = $1 LIMIT $2[0m  [["book_id", 1], ["LIMIT", 11]]
+  [1m[36mGenre Load (0.3ms)[0m  [1m[34mSELECT "genres".* FROM "genres" ORDER BY "genres"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mBook Load (0.4ms)[0m  [1m[34mSELECT "books".* FROM "books" INNER JOIN "books_genres" ON "books"."id" = "books_genres"."book_id" WHERE "books_genres"."genre_id" = $1 LIMIT $2[0m  [["genre_id", 1], ["LIMIT", 11]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(7654905522788743065)[0m
+  [1m[35m (1.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateImages (20200304002437)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (49.9ms)[0m  [1m[35mCREATE TABLE "images" ("id" bigserial primary key, "imageable_type" character varying NOT NULL, "imageable_id" bigint NOT NULL, "url" character varying, "date_taken" date, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (2.3ms)[0m  [1m[35mCREATE  INDEX  "index_images_on_imageable_type_and_imageable_id" ON "images"  ("imageable_type", "imageable_id")[0m
+  [1m[36mprimary::SchemaMigration Create (1.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200304002437"]]
+  [1m[35m (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.6ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (1.8ms)[0m  [1m[34mSELECT pg_advisory_unlock(7654905522788743065)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mBook Load (0.4ms)[0m  [1m[34mSELECT "books".* FROM "books" ORDER BY "books"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mImage Create (26.3ms)[0m  [1m[32mINSERT INTO "images" ("imageable_type", "imageable_id", "url", "date_taken", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["imageable_type", "Book"], ["imageable_id", 1], ["url", "https://bit.ly/2U8bW2B"], ["date_taken", "2011-01-21"], ["created_at", "2020-03-04 00:25:51.131663"], ["updated_at", "2020-03-04 00:25:51.131663"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mAuthor Load (0.4ms)[0m  [1m[34mSELECT "authors".* FROM "authors" ORDER BY "authors"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mImage Create (0.6ms)[0m  [1m[32mINSERT INTO "images" ("imageable_type", "imageable_id", "url", "date_taken", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["imageable_type", "Author"], ["imageable_id", 2], ["url", "d"], ["date_taken", "2005-03-12"], ["created_at", "2020-03-04 00:25:51.193032"], ["updated_at", "2020-03-04 00:25:51.193032"]]
+  [1m[35m (40.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mImage Load (0.5ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."imageable_id" = $1 AND "images"."imageable_type" = $2 LIMIT $3[0m  [["imageable_id", 1], ["imageable_type", "Book"], ["LIMIT", 11]]
+  [1m[36mImage Load (1.2ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."imageable_id" = $1 AND "images"."imageable_type" = $2 LIMIT $3[0m  [["imageable_id", 2], ["imageable_type", "Author"], ["LIMIT", 11]]
+  [1m[36mImage Load (0.2ms)[0m  [1m[34mSELECT "images".* FROM "images" LIMIT $1[0m  [["LIMIT", 11]]
